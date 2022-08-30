@@ -41,8 +41,8 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         _translate = QtCore.QCoreApplication.translate
-        Dialog.setWindowTitle(_translate("Dialog", "Dialog"))
-        self.camera.setText(_translate("Dialog", "开启摄像头"))
+        Dialog.setWindowTitle(_translate("Dialog", "人体姿态估计"))
+        self.camera.setText(_translate("Dialog", "开启相机"))
         self.exit.setText(_translate("Dialog", "退出"))
         self.master.setText(_translate("Dialog", "master camera"))
         self.sub1.setText(_translate("Dialog", "sub1 camera"))

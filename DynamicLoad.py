@@ -3,15 +3,16 @@ import sys
 import ui.camera as camera
 
 from PyQt5.QtWidgets import QApplication, QDialog, QMessageBox
-from PyQt5 import QtCore, QtGui
+from PyQt5 import QtCore, QtGui, uic
 import cv2
 
 
 class MainWindow(QDialog):
     def __init__(self, parent=None):
         super(QDialog, self).__init__(parent)
-        self.ui = camera.Ui_Dialog()  # 只是实例化，为了调用下面的方法
-        self.ui.setupUi(self)
+        self.ui = uic.loadUi('./ui/camera.ui') # 里面的exec不用管，已经有的close管用，也不用管
+        self.ui.camera.clicked.connect(self.runCamera)# 相当于重置？
+
         self.timer_camera = QtCore.QTimer()  # 定义定时器，用于控制显示视频的帧率
         self.cap = cv2.VideoCapture()  # 视频流
         self.CAM_NUM = 0
@@ -31,6 +32,10 @@ class MainWindow(QDialog):
             self.cap.release()  # 释放视频流
             self.ui.master.clear()  # 清空视频显示区域
             self.ui.camera.setText('打开相机')
+            self.ui.master.setText('主相机')
+            self.ui.sub1.setText('从相机1')
+            self.ui.sub2.setText('从相机2')
+            self.ui.BP.setText('算法估计')
         pass
 
     def show_camera(self):
@@ -44,7 +49,7 @@ class MainWindow(QDialog):
 
 
 if __name__ == '__main__':
-    app = QApplication(sys.argv)  # 固定的，表示程序应用
-    ui = MainWindow()  # 实例化Ui_MainWindow
-    ui.show()  # 调用ui的show()以显示。同样show()是源于父类QtWidgets.QWidget的
-    sys.exit(app.exec_())  # 不加这句，程序界面会一闪而过
+    app = QApplication(sys.argv)
+    DL = MainWindow()
+    DL.ui.show()
+    sys.exit(app.exec_())
